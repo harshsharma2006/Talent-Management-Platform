@@ -5,7 +5,7 @@ import hashlib
 import json
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-DB_PATH = BASE_DIR / "data" / "talentsphere.db"
+DB_PATH = BASE_DIR / "data" / "talentsphere_healthy.db"
 
 LEVELS = ["Beginner", "Intermediate", "Advanced", "Expert"]
 ROLE_CATALOG = {
