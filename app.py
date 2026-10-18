@@ -1,11 +1,11 @@
-
+﻿
 import streamlit as st
 import pandas as pd
 from services.core import init_db, save_employee, list_employees, delete_employee
 
 st.set_page_config(
     page_title="Talent Management Platform",
-    page_icon="👥",
+    page_icon="ðŸ‘¥",
     layout="wide"
 )
 
@@ -96,14 +96,14 @@ if rows:
     selected = st.selectbox(
         "Delete Employee",
         ["Select Employee"] + [
-            f"{r['employee_id']} — {r['employee_name']}"
+            f"{r['employee_id']} - {r['employee_name']}"
             for r in rows
         ]
     )
 
     if selected != "Select Employee":
         if st.button("Delete Selected Employee"):
-            delete_employee(selected.split(" — ", 1)[0])
+            delete_employee(selected.split(" - ", 1)[0])
             st.success("Employee deleted.")
             st.rerun()
 else:
@@ -494,7 +494,7 @@ if not career_employees:
     st.info("Add an employee first to use Career Growth.")
 else:
     career_employee_options = {
-        f"{e['employee_id']} — {e['employee_name']}": e for e in career_employees
+        f"{e['employee_id']} - {e['employee_name']}": e for e in career_employees
     }
     career_selected_label = st.selectbox(
         "Select employee for career planning",
@@ -528,8 +528,14 @@ else:
         save_career_goal = st.form_submit_button("Save Career Goal", type="primary")
 
     if save_career_goal:
+        clean_goal = career_goal_text.strip()
+        prefix = "Career goal mein likho:"
+
+        if clean_goal.lower().startswith(prefix.lower()):
+            clean_goal = clean_goal[len(prefix):].strip()
+
         save_employee_career_goal(
-            career_employee_id, target_role, career_goal_text, career_timeline
+            career_employee_id, target_role, clean_goal, career_timeline
         )
         st.success("Career goal saved.")
         st.rerun()
@@ -577,12 +583,12 @@ else:
         skill_to_delete = st.selectbox(
             "Select skill record to delete",
             ["Select skill"] + [
-                f"{s['id']} — {s['skill_name']} ({s['proficiency']})" for s in career_skills
+                f"{s['id']} - {s['skill_name']} ({s['proficiency']})" for s in career_skills
             ],
             key="career_skill_delete_selector"
         )
         if skill_to_delete != "Select skill" and st.button("Delete Selected Skill"):
-            delete_employee_career_skill(int(skill_to_delete.split(" — ", 1)[0]), career_employee_id)
+            delete_employee_career_skill(int(skill_to_delete.split(" - ", 1)[0]), career_employee_id)
             st.success("Skill deleted.")
             st.rerun()
     else:
@@ -639,7 +645,7 @@ if not roadmap_employees:
     st.info("Add an employee first to build a career roadmap.")
 else:
     roadmap_employee_options = {
-        f"{e['employee_id']} — {e['employee_name']}": e
+        f"{e['employee_id']} - {e['employee_name']}": e
         for e in roadmap_employees
     }
     roadmap_selected_label = st.selectbox(
@@ -702,10 +708,10 @@ else:
 
         phase_count = min(4, max(1, timeline_months // 2))
         phases = [
-            ("Phase 1 — Foundations", "Learn the basics and practise with small exercises."),
-            ("Phase 2 — Practical Skills", "Complete guided exercises and work with real datasets."),
-            ("Phase 3 — Projects", "Build a portfolio project and document your decisions."),
-            ("Phase 4 — Job Readiness", "Polish the portfolio, revise interview topics, and practise explaining results.")
+            ("Phase 1 - Foundations", "Learn the basics and practise with small exercises."),
+            ("Phase 2 - Practical Skills", "Complete guided exercises and work with real datasets."),
+            ("Phase 3 - Projects", "Build a portfolio project and document your decisions."),
+            ("Phase 4 - Job Readiness", "Polish the portfolio, revise interview topics, and practise explaining results.")
         ]
         active_phases = phases[:phase_count]
 
@@ -792,7 +798,7 @@ else:
     )
 
     pdf_employee_options = {
-        f"{e['employee_id']} ? {e['employee_name']}": e
+        f"{e['employee_id']} - {e['employee_name']}": e
         for e in roadmap_employees
     }
 
@@ -816,7 +822,7 @@ else:
         pdf_goal_text = str(pdf_goal_text).replace("Career goal mein likho: ", "").strip()
         pdf_skills = get_employee_career_skills(pdf_employee_id) or []
 
-        pdf_buffer = BytesIO()
+        pdf_buffer = BytesIO()    
         pdf_doc = SimpleDocTemplate(
             pdf_buffer,
             pagesize=A4,
@@ -942,15 +948,15 @@ else:
 
         story.append(Paragraph("Career Roadmap", pdf_styles["SectionHeading"]))
         story.append(Paragraph(
-            "Phase 1 ? Foundations: Review concepts and practise the highest-priority skill gaps.",
+            "Phase 1 - Foundations: Review concepts and practise the highest-priority skill gaps.",
             pdf_styles["BodyText"]
         ))
         story.append(Paragraph(
-            "Phase 2 ? Practical Skills: Complete exercises and practise with realistic datasets or tasks.",
+            "Phase 2 - Practical Skills: Complete exercises and practise with realistic datasets or tasks.",
             pdf_styles["BodyText"]
         ))
         story.append(Paragraph(
-            "Phase 3 ? Projects: Build a portfolio project that demonstrates the target role's skills.",
+            "Phase 3 - Projects: Build a portfolio project that demonstrates the target role's skills.",
             pdf_styles["BodyText"]
         ))
         story.append(Spacer(1, 12))
@@ -978,3 +984,6 @@ else:
         )
     else:
         st.info("Add an employee first to generate a career growth report.")
+
+
+
