@@ -45,10 +45,10 @@ with st.form("employee_form"):
 
     a, b = st.columns(2)
     save = a.form_submit_button(
-        "Save Employee", type="primary", use_container_width=True
+        "Save Employee", type="primary", width="stretch"
     )
     clear = b.form_submit_button(
-        "Clear Form", use_container_width=True
+        "Clear Form", width="stretch"
     )
 
 if clear:
