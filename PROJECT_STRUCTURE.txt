@@ -1,0 +1,15 @@
+Talent Management Platform
+
+Main files:
+- app_talent_management.py : Current app candidate
+- app.py                   : Existing app; preserve for now
+- services/                : Backend/business logic
+- data/                    : Database and application data
+- requirements.txt         : Python dependencies
+- README.md                : Project documentation
+- backups/                 : Older backup versions
+- ui_prototype.py          : Keep until verified unused
+
+Environment:
+- .venv/                   : Local Python environment
+- .git/                    : Git repository metadata
