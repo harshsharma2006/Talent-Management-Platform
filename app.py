@@ -9,6 +9,137 @@ st.set_page_config(
     layout="wide"
 )
 
+
+# ---------- CORPORATE LIGHT UI THEME ----------
+st.markdown("""
+<style>
+/* Main application background */
+.stApp {
+    background: #F5F7FB;
+    color: #172B4D;
+}
+
+/* Main content spacing */
+.block-container {
+    max-width: 1440px;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background: #FFFFFF;
+    border-right: 1px solid #E5EAF2;
+}
+
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3 {
+    color: #17365D;
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #17365D !important;
+    letter-spacing: -0.3px;
+}
+
+/* Metric cards */
+div[data-testid="stMetric"] {
+    background: #FFFFFF;
+    border: 1px solid #E3EAF4;
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 3px 12px rgba(23, 54, 93, 0.04);
+}
+
+div[data-testid="stMetricLabel"] {
+    color: #607089;
+    font-weight: 600;
+}
+
+div[data-testid="stMetricValue"] {
+    color: #17365D;
+    font-weight: 700;
+}
+
+/* Buttons */
+.stButton > button,
+.stDownloadButton > button {
+    border-radius: 9px;
+    min-height: 42px;
+    font-weight: 600;
+    border: 1px solid #CBD7E8;
+    transition: all 0.15s ease;
+}
+
+.stButton > button[kind="primary"],
+.stButton > button[data-testid="stBaseButton-primary"] {
+    background: #1D4ED8;
+    color: #FFFFFF;
+    border-color: #1D4ED8;
+}
+
+.stButton > button:hover,
+.stDownloadButton > button:hover {
+    border-color: #1D4ED8;
+    color: #1D4ED8;
+}
+
+/* Text fields and select boxes */
+div[data-baseweb="input"],
+div[data-baseweb="select"],
+div[data-baseweb="textarea"] {
+    border-radius: 9px;
+}
+
+/* Tables and dataframes */
+div[data-testid="stDataFrame"],
+div[data-testid="stTable"] {
+    background: #FFFFFF;
+    border: 1px solid #E3EAF4;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Tabs */
+button[data-baseweb="tab"] {
+    font-weight: 600;
+}
+
+/* Alerts and status messages */
+div[data-testid="stAlert"] {
+    border-radius: 10px;
+}
+
+/* Dividers */
+hr {
+    border-color: #E3EAF4;
+}
+
+/* Form containers */
+div[data-testid="stForm"] {
+    background: #FFFFFF;
+    border: 1px solid #E3EAF4;
+    border-radius: 14px;
+    padding: 20px;
+}
+
+/* Responsive spacing for smaller screens */
+@media (max-width: 768px) {
+    .block-container {
+        padding: 1rem;
+    }
+
+    div[data-testid="stMetric"] {
+        padding: 12px;
+    }
+}
+</style>
+""", unsafe_allow_html=True)
+# ---------- END CORPORATE LIGHT UI THEME ----------
+
+
 init_db()
 
 st.title("Talent Management Platform")
