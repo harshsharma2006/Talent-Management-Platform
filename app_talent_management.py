@@ -1,3 +1,4 @@
+from reportlab.lib.units import inch
 from reportlab.lib.styles import ParagraphStyle
 from services.performance_service import initialize_reviews, add_review
 from reportlab.platypus import (
@@ -9,6 +10,7 @@ from reportlab.lib.pagesizes import A4
 
 
 import streamlit as st
+from services.hiring_page import render_hiring_page
 from io import BytesIO
 import pandas as pd
 from services.core import init_db, save_employee, list_employees, delete_employee
@@ -77,7 +79,7 @@ def get_employee_user_count(employee_id):
 
 st.set_page_config(
     page_title="Talent Management Platform",
-    page_icon="Ã°Å¸â€˜Â¥",
+    page_icon="ÃƒÂ°Ã…Â¸Ã¢â‚¬ËœÃ‚Â¥",
     layout="wide"
 )
 
@@ -345,12 +347,12 @@ if current_user.get("role") == "employee":
     else:
         st.subheader("My Profile")
         profile_cols = st.columns(3)
-        profile_cols[0].metric("Employee ID", own_employee.get("employee_id", "â€”"))
-        profile_cols[1].metric("Department", own_employee.get("department", "â€”"))
-        profile_cols[2].metric("Designation", own_employee.get("designation", "â€”"))
-        st.write("**Name:**", own_employee.get("employee_name", "â€”"))
-        st.write("**Years of experience:**", own_employee.get("years_experience", "â€”"))
-        st.write("**Primary skills:**", own_employee.get("primary_skills", "â€”"))
+        profile_cols[0].metric("Employee ID", own_employee.get("employee_id", "Ã¢â‚¬â€"))
+        profile_cols[1].metric("Department", own_employee.get("department", "Ã¢â‚¬â€"))
+        profile_cols[2].metric("Designation", own_employee.get("designation", "Ã¢â‚¬â€"))
+        st.write("**Name:**", own_employee.get("employee_name", "Ã¢â‚¬â€"))
+        st.write("**Years of experience:**", own_employee.get("years_experience", "Ã¢â‚¬â€"))
+        st.write("**Primary skills:**", own_employee.get("primary_skills", "Ã¢â‚¬â€"))
         try:
             from services.performance_service import initialize_reviews, list_reviews, employee_average_rating
             initialize_reviews()
@@ -412,6 +414,7 @@ with st.sidebar:
             "Reports",
             "Career Growth",
             "Employee Logins",
+            "Hiring & Resumes",
             "Profile",
             "Settings",
         ],
@@ -422,11 +425,13 @@ with st.sidebar:
             "Reports",
             "Career Growth",
             "Employee Logins",
+            "Hiring & Resumes",
             "Profile",
             "Settings",
         ].index(selected_page) if selected_page in [
             "Dashboard", "Employee Management", "Performance Reviews",
-            "Reports", "Career Growth", "Employee Logins", "Profile", "Settings"
+            "Reports", "Career Growth", "Employee Logins",
+            "Hiring & Resumes", "Profile", "Settings"
         ] else 0,
         key="admin_selected_page",
     )
@@ -1646,3 +1651,9 @@ if selected_page == "Settings":
 
 
 
+
+
+
+# ---------- HIRING_RESUMES_PAGE ----------
+if selected_page == "Hiring & Resumes":
+    render_hiring_page(AUTH_DB_PATH)
